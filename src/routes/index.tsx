@@ -71,8 +71,8 @@ function Index() {
       </div>
 
       {/* Readability overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,var(--background)_95%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,var(--background)_100%)]" />
 
       <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center">
         <p className="mb-5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium tracking-[0.25em] text-primary uppercase">

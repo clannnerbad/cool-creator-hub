@@ -116,7 +116,7 @@ function Index() {
           <div className="flex flex-col items-center px-5 py-6 sm:px-8">
             <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
               <img
-                src={arcGodsPreview.url}
+                src={ARC_GODS_PREVIEW}
                 alt="Animated ArcSultans NFT collection preview"
                 className="aspect-square w-full object-cover [image-rendering:pixelated]"
               />

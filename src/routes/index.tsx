@@ -20,6 +20,42 @@ import nft6 from "@/assets/nft-6.jpg";
 import arcGodsPreview from "@/assets/arcgods-preview.gif.asset.json";
 
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
+const SIDE_PREVIEWS = [
+  "nft-backdrop-ivory",
+  "nft-backdrop-slate",
+  "nft-backdrop-sky",
+  "nft-backdrop-sand",
+] as const;
+
+function RandomGifPreview({ backdrop, slot }: { backdrop: string; slot: number }) {
+  const [restart, setRestart] = useState(0);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const randomize = () => {
+      setRestart((value) => value + 1);
+      timeout = setTimeout(randomize, 2800 + Math.random() * 4200);
+    };
+
+    timeout = setTimeout(randomize, 250 + slot * 430 + Math.random() * 700);
+    return () => clearTimeout(timeout);
+  }, [slot]);
+
+  const separator = arcGodsPreview.url.includes("?") ? "&" : "?";
+  const previewUrl = `${arcGodsPreview.url}${separator}side=${slot}&take=${restart}`;
+
+  return (
+    <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
+      <img
+        key={restart}
+        src={previewUrl}
+        alt={`Animated ArcSultans NFT preview ${slot + 1}`}
+        className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]"
+      />
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,17 +94,13 @@ function Index() {
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
-          {["nft-backdrop-ivory", "nft-backdrop-slate"].map((backdrop) => (
-            <div key={backdrop} className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
-              <img src={arcGodsPreview.url} alt="Animated ArcSultans NFT preview" className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]" />
-            </div>
+          {SIDE_PREVIEWS.slice(0, 2).map((backdrop, slot) => (
+            <RandomGifPreview key={backdrop} backdrop={backdrop} slot={slot} />
           ))}
         </div>
         <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
-          {["nft-backdrop-sky", "nft-backdrop-sand"].map((backdrop) => (
-            <div key={backdrop} className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
-              <img src={arcGodsPreview.url} alt="Animated ArcSultans NFT preview" className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]" />
-            </div>
+          {SIDE_PREVIEWS.slice(2).map((backdrop, index) => (
+            <RandomGifPreview key={backdrop} backdrop={backdrop} slot={index + 2} />
           ))}
         </div>
 

@@ -46,24 +46,10 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
-  const [sideFrames, setSideFrames] = useState([0, 2, 3, 5]);
 
   useEffect(() => {
     const id = setInterval(() => setActive((i) => (i + 1) % SLIDES.length), 3500);
     return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const timers = sideFrames.map((_, index) =>
-      window.setInterval(() => {
-        setSideFrames((frames) =>
-          frames.map((frame, frameIndex) =>
-            frameIndex === index ? Math.floor(Math.random() * SLIDES.length) : frame,
-          ),
-        );
-      }, 2200 + index * 730),
-    );
-    return () => timers.forEach(window.clearInterval);
   }, []);
 
   return (
@@ -72,16 +58,16 @@ function Index() {
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
-          {sideFrames.slice(0, 2).map((frame, index) => (
-            <div key={index} className="crt-screen border-4 border-secondary bg-card p-2 pixel-shadow">
-              <img src={SLIDES[frame]} alt="ArcSultans character preview" className="aspect-square w-full object-cover [image-rendering:pixelated]" />
+          {["nft-backdrop-ivory", "nft-backdrop-slate"].map((backdrop) => (
+            <div key={backdrop} className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
+              <img src={arcGodsPreview.url} alt="Animated ArcSultans NFT preview" className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]" />
             </div>
           ))}
         </div>
         <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
-          {sideFrames.slice(2).map((frame, index) => (
-            <div key={index} className="crt-screen border-4 border-secondary bg-card p-2 pixel-shadow">
-              <img src={SLIDES[frame]} alt="ArcSultans character preview" className="aspect-square w-full object-cover [image-rendering:pixelated]" />
+          {["nft-backdrop-sky", "nft-backdrop-sand"].map((backdrop) => (
+            <div key={backdrop} className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
+              <img src={arcGodsPreview.url} alt="Animated ArcSultans NFT preview" className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]" />
             </div>
           ))}
         </div>

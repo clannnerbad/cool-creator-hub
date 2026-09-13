@@ -17,6 +17,7 @@ import nft3 from "@/assets/nft-3.jpg";
 import nft4 from "@/assets/nft-4.jpg";
 import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
+import arcGodsPreview from "@/assets/arcgods-preview.gif.asset.json";
 
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 
@@ -45,77 +46,106 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
+  const [sideFrames, setSideFrames] = useState([0, 2, 3, 5]);
 
   useEffect(() => {
     const id = setInterval(() => setActive((i) => (i + 1) % SLIDES.length), 3500);
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const timers = sideFrames.map((_, index) =>
+      window.setInterval(() => {
+        setSideFrames((frames) =>
+          frames.map((frame, frameIndex) =>
+            frameIndex === index ? Math.floor(Math.random() * SLIDES.length) : frame,
+          ),
+        );
+      }, 2200 + index * 730),
+    );
+    return () => timers.forEach(window.clearInterval);
+  }, []);
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
-      {/* Rotating NFT preview slideshow */}
-      <div className="absolute inset-0">
-        {SLIDES.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            aria-hidden="true"
-            width={1024}
-            height={1024}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
-              i === active ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
+    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8">
+      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:32px_32px]" />
 
-      {/* Readability overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,var(--background)_100%)]" />
+      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
+        <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
+          {sideFrames.slice(0, 2).map((frame, index) => (
+            <div key={index} className="crt-screen border-4 border-secondary bg-card p-2 pixel-shadow">
+              <img src={SLIDES[frame]} alt="ArcSultans character preview" className="aspect-square w-full object-cover [image-rendering:pixelated]" />
+            </div>
+          ))}
+        </div>
+        <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
+          {sideFrames.slice(2).map((frame, index) => (
+            <div key={index} className="crt-screen border-4 border-secondary bg-card p-2 pixel-shadow">
+              <img src={SLIDES[frame]} alt="ArcSultans character preview" className="aspect-square w-full object-cover [image-rendering:pixelated]" />
+            </div>
+          ))}
+        </div>
 
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center">
-        <p className="mb-5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium tracking-[0.25em] text-primary uppercase">
-          Mint · 16 September 2026
-        </p>
+        <div className="w-full max-w-xl border-8 border-secondary bg-card pixel-shadow">
+          <header className="border-b-8 border-secondary bg-muted px-4 py-5 text-center sm:px-6">
+            <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSULTANS</h1>
+            <div className="mt-4 flex items-center justify-center gap-4 font-display text-[9px] text-muted-foreground sm:gap-8 sm:text-[10px]">
+              <span>CREDITS: 01</span>
+              <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>
+              <span>ARC MODE</span>
+            </div>
+          </header>
 
-        <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl md:text-8xl">
-          Arc<span className="text-primary">Sultans</span>
-        </h1>
+          <div className="flex flex-col items-center px-5 py-6 sm:px-8">
+            <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
+              <img
+                src={arcGodsPreview.url}
+                alt="Animated ArcSultans NFT collection preview"
+                className="aspect-square w-full object-cover [image-rendering:pixelated]"
+              />
+              <span className="absolute left-3 top-3 z-20 bg-background px-2 py-1 font-display text-[8px] text-accent">LIVE PREVIEW</span>
+            </div>
 
-        <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-          A golden dynasty of 1/1 sovereigns on ARC. Claim your place before the gates close.
-        </p>
+            <p className="mt-5 text-center font-display text-[10px] leading-5 text-muted-foreground sm:text-xs">
+              A GOLDEN DYNASTY OF 1/1 SOVEREIGNS ON ARC
+            </p>
 
-        <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
               size="lg"
-              className="mt-10 h-14 px-10 text-base font-semibold shadow-[0_0_40px_-8px_var(--primary)]"
+                  className="mt-6 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
             >
-              Enter Whitelist
+                  ENTER WHITELIST
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
+              <DialogContent className="max-h-[92vh] overflow-y-auto border-4 border-accent bg-popover p-5 pixel-shadow sm:max-w-md sm:rounded-none sm:p-7">
             <DialogHeader>
-              <DialogTitle>Join the ArcSultans whitelist</DialogTitle>
-              <DialogDescription>
-                Fill in your details and confirm the task to secure your spot.
+                  <DialogTitle className="font-display text-lg text-accent">JOIN WHITELIST</DialogTitle>
+                  <DialogDescription className="font-display text-[10px] leading-5">
+                    COMPLETE ALL FIELDS TO SECURE YOUR SPOT
               </DialogDescription>
             </DialogHeader>
             <WhitelistForm />
           </DialogContent>
         </Dialog>
 
-        <div className="mt-12 flex gap-2">
+            <div className="mt-5 flex gap-2" aria-hidden="true">
           {SLIDES.map((src, i) => (
             <span
               key={src}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === active ? "w-8 bg-primary" : "w-1.5 bg-primary/30"
+                  className={`h-2 transition-all duration-300 ${
+                    i === active ? "w-8 bg-accent" : "w-2 bg-secondary"
               }`}
             />
           ))}
+        </div>
+          </div>
+
+          <footer className="flex items-center justify-between border-t-8 border-secondary bg-muted px-5 py-3 font-display text-[8px] text-muted-foreground">
+            <span>MINT: 16.09.2026</span>
+            <span className="text-accent">SYSTEM READY</span>
+          </footer>
         </div>
       </section>
     </main>

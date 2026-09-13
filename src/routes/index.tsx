@@ -42,8 +42,7 @@ function RandomGifPreview({ backdrop, slot }: { backdrop: string; slot: number }
     return () => clearTimeout(timeout);
   }, [slot]);
 
-  const separator = arcGodsPreview.url.includes("?") ? "&" : "?";
-  const previewUrl = `${arcGodsPreview.url}${separator}side=${slot}&take=${restart}`;
+  const previewUrl = `${ARC_GODS_PREVIEW}?side=${slot}&take=${restart}`;
 
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>

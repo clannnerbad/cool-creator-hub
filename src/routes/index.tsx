@@ -17,7 +17,7 @@ import nft3 from "@/assets/nft-3.jpg";
 import nft4 from "@/assets/nft-4.jpg";
 import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
-import arcGodsPreview from "@/assets/arcgods-preview.gif.asset.json";
+const ARC_GODS_PREVIEW = "/arcgods-preview.gif";
 
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 const SIDE_PREVIEWS = [

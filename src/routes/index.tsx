@@ -17,7 +17,7 @@ import nft3 from "@/assets/nft-3.jpg";
 import nft4 from "@/assets/nft-4.jpg";
 import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
-import arcGodsPreview from "@/assets/arcgods-preview.gif.asset.json";
+const ARC_GODS_PREVIEW = "/arcgods-preview.gif";
 
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 const SIDE_PREVIEWS = [
@@ -42,8 +42,7 @@ function RandomGifPreview({ backdrop, slot }: { backdrop: string; slot: number }
     return () => clearTimeout(timeout);
   }, [slot]);
 
-  const separator = arcGodsPreview.url.includes("?") ? "&" : "?";
-  const previewUrl = `${arcGodsPreview.url}${separator}side=${slot}&take=${restart}`;
+  const previewUrl = `${ARC_GODS_PREVIEW}?side=${slot}&take=${restart}`;
 
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
@@ -117,7 +116,7 @@ function Index() {
           <div className="flex flex-col items-center px-5 py-6 sm:px-8">
             <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
               <img
-                src={arcGodsPreview.url}
+                src={ARC_GODS_PREVIEW}
                 alt="Animated ArcSultans NFT collection preview"
                 className="aspect-square w-full object-cover [image-rendering:pixelated]"
               />

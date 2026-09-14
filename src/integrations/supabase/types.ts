@@ -17,23 +17,23 @@ export type Database = {
       whitelist_signups: {
         Row: {
           created_at: string
-          email: string
           id: string
           wallet_address: string
+          x_comment_link: string
           x_username: string
         }
         Insert: {
           created_at?: string
-          email: string
           id?: string
           wallet_address: string
+          x_comment_link?: string
           x_username: string
         }
         Update: {
           created_at?: string
-          email?: string
           id?: string
           wallet_address?: string
+          x_comment_link?: string
           x_username?: string
         }
         Relationships: []

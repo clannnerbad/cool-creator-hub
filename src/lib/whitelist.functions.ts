@@ -6,13 +6,20 @@ const signupSchema = z.object({
     .string()
     .trim()
     .regex(/^0x[a-fA-F0-9]{40}$/, "Invalid ARC wallet address"),
-  email: z.string().trim().email("Invalid email address").max(255),
   xUsername: z.string().trim().min(1, "X username is required").max(50),
+  xCommentLink: z
+    .string()
+    .trim()
+    .regex(
+      /^https:\/\/(x\.com|twitter\.com)\/\S+$/,
+      "Link must start with https://x.com/ or https://twitter.com/",
+    )
+    .max(500),
 });
 
 export type SignupResult =
   | { ok: true }
-  | { ok: false; field: "walletAddress" | "email" | "xUsername" | "form"; message: string };
+  | { ok: false; field: "walletAddress" | "xUsername" | "xCommentLink" | "form"; message: string };
 
 export const submitWhitelistSignup = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => data)
@@ -22,18 +29,19 @@ export const submitWhitelistSignup = createServerFn({ method: "POST" })
       const issue = parsed.error.issues[0];
       return {
         ok: false,
-        field: (issue?.path[0] as "walletAddress" | "email" | "xUsername") ?? "form",
+        field: (issue?.path[0] as "walletAddress" | "xUsername" | "xCommentLink") ?? "form",
         message: issue?.message ?? "Invalid submission",
       };
     }
 
-    const { walletAddress, email, xUsername } = parsed.data;
+    const { walletAddress, xUsername, xCommentLink } = parsed.data;
+    const username = xUsername.replace(/^@/, "");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: existing, error: lookupError } = await supabaseAdmin
       .from("whitelist_signups")
-      .select("wallet_address, email")
-      .or(`wallet_address.ilike.${walletAddress},email.ilike.${email}`);
+      .select("wallet_address, x_username")
+      .or(`wallet_address.ilike.${walletAddress},x_username.ilike.${username}`);
 
     if (lookupError) {
       console.error("whitelist lookup failed", lookupError);
@@ -51,13 +59,13 @@ export const submitWhitelistSignup = createServerFn({ method: "POST" })
           message: "This wallet address is already whitelisted.",
         };
       }
-      return { ok: false, field: "email", message: "This email is already whitelisted." };
+      return { ok: false, field: "xUsername", message: "This X username is already whitelisted." };
     }
 
     const { error: insertError } = await supabaseAdmin.from("whitelist_signups").insert({
       wallet_address: walletAddress,
-      email,
-      x_username: xUsername.replace(/^@/, ""),
+      x_username: username,
+      x_comment_link: xCommentLink,
     });
 
     if (insertError) {
@@ -65,18 +73,11 @@ export const submitWhitelistSignup = createServerFn({ method: "POST" })
         return {
           ok: false,
           field: "form",
-          message: "This wallet address or email is already whitelisted.",
+          message: "This wallet address or X username is already whitelisted.",
         };
       }
       console.error("whitelist insert failed", insertError);
       return { ok: false, field: "form", message: "Something went wrong. Please try again." };
-    }
-
-    try {
-      const { sendWhitelistConfirmation } = await import("./whitelist-email.server");
-      await sendWhitelistConfirmation(email);
-    } catch (err) {
-      console.error("whitelist confirmation email failed", err);
     }
 
     return { ok: true };

@@ -152,7 +152,7 @@ function Index() {
       <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-8">
         <div className="flex w-full items-center justify-between gap-6">
           <div className="flex flex-col">
-            <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ArcSultans</span>
+            <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ARCSultans</span>
             <span className="font-display text-[10px] text-gray-400 sm:text-xs">Mint 16 September 2026 · Arc network</span>
           </div>
           <div className="flex items-center gap-3">

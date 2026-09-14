@@ -149,8 +149,8 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
+      <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-8">
+        <div className="flex w-full items-center justify-between gap-6">
           <div className="flex flex-col">
             <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ArcSultans</span>
             <span className="font-display text-[10px] text-gray-400 sm:text-xs">Mint 16 September 2026 · Arc network</span>

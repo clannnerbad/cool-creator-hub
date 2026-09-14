@@ -109,11 +109,11 @@ function Index() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 pb-24 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8 md:pb-28">
+    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 pb-28 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8 md:pb-32">
       <BackgroundSlideshow />
 
       {!showWhitelist ? (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-3xl flex-col items-center justify-center text-center">
+        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col items-center justify-center text-center">
           <h1 className="font-display text-4xl font-extrabold text-accent sm:text-6xl">ARCSultans</h1>
           <p className="mt-6 max-w-2xl font-display text-sm leading-7 text-foreground sm:text-lg">
             999 Sultans arriving on ARC. Claim your throne before the gates close.
@@ -127,13 +127,13 @@ function Index() {
           </Button>
         </section>
       ) : (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-6xl items-center justify-center">
-          <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
+        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-6xl items-center justify-center">
+          <div className="fixed left-4 top-24 bottom-28 hidden w-40 flex-col justify-around lg:flex">
             {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
               <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
             ))}
           </div>
-          <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
+          <div className="fixed right-4 top-24 bottom-28 hidden w-40 flex-col justify-around lg:flex">
             {SIDE_FRAMES.slice(2).map((frame, index) => (
               <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
             ))}

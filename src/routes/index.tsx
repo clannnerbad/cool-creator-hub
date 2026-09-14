@@ -155,7 +155,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative z-10 mx-auto mt-4 flex max-w-6xl items-center justify-center gap-6 pb-4">
+      <footer className="relative z-10 mx-auto mt-8 flex max-w-6xl items-center justify-end gap-12 pb-6">
         <a
           href="https://t.me/YOUR_CHANNEL"
           target="_blank"

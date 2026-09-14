@@ -83,12 +83,12 @@ function Index() {
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
           {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
-            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
+            <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
           ))}
         </div>
         <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
           {SIDE_FRAMES.slice(2).map((frame, index) => (
-            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
+            <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
           ))}
         </div>
 

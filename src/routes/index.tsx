@@ -149,34 +149,43 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative z-10 mx-auto mt-8 flex max-w-6xl items-center justify-end gap-12 pb-6">
-        <a
-          href="https://t.me/YOUR_CHANNEL"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Telegram"
-          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
-        >
-          <img src="/footer/telegram.png" alt="Telegram" className="h-8 w-auto" />
-        </a>
-        <a
-          href="https://x.com/SaudisARC"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X (Twitter)"
-          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
-        >
-          <img src="/footer/x-white.png" alt="X (Twitter)" className="h-8 w-auto" />
-        </a>
-        <a
-          href="https://opensea.io/collection/YOUR_COLLECTION"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="OpenSea"
-          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
-        >
-          <img src="/footer/opensea-white.svg" alt="OpenSea" className="h-8 w-auto" />
-        </a>
+      <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-10">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
+          <div className="flex flex-col">
+            <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ArcSultans</span>
+            <span className="font-display text-[10px] text-gray-400 sm:text-xs">Mint 16 September 2026 · Arc network</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {[
+              {
+                href: "https://x.com/SaudisARC",
+                label: "X (Twitter)",
+                icon: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/x-pixel-outline.svg",
+              },
+              {
+                href: "https://t.me/YOUR_CHANNEL",
+                label: "Telegram",
+                icon: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/telegram-pixel.svg",
+              },
+              {
+                href: "https://opensea.io/collection/YOUR_COLLECTION",
+                label: "OpenSea",
+                icon: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/opensea-pixel.svg",
+              },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.label}
+                className="flex h-11 w-11 items-center justify-center border border-gray-600 bg-black/40 transition-all duration-200 hover:border-accent hover:scale-105"
+              >
+                <img src={item.icon} alt={item.label} className="h-6 w-6 object-contain" />
+              </a>
+            ))}
+          </div>
+        </div>
       </footer>
     </main>
   );

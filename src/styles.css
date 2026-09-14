@@ -137,6 +137,14 @@
   body * {
     cursor: none !important;
   }
+
+  .cursor-overlay {
+    display: block;
+  }
+}
+
+.cursor-overlay {
+  display: none;
 }
 
 .cursor-spark {

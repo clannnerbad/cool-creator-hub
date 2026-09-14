@@ -107,7 +107,7 @@ function CustomCursor() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
+    <div aria-hidden className="cursor-overlay pointer-events-none fixed inset-0 z-[100]">
       <img
         ref={cursorRef}
         src={CURSOR_IMAGE}

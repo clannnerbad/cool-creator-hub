@@ -113,7 +113,7 @@ function Index() {
       <BackgroundSlideshow />
 
       {!showWhitelist ? (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-3xl flex-col items-center justify-center text-center">
+        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col items-center justify-center text-center">
           <h1 className="font-display text-4xl font-extrabold text-accent sm:text-6xl">ARCSultans</h1>
           <p className="mt-6 max-w-2xl font-display text-sm leading-7 text-foreground sm:text-lg">
             999 Sultans arriving on ARC. Claim your throne before the gates close.
@@ -127,7 +127,7 @@ function Index() {
           </Button>
         </section>
       ) : (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-6xl items-center justify-center">
+        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-6xl items-center justify-center">
           <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
             {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
               <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />

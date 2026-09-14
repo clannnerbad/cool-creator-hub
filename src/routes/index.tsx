@@ -32,7 +32,7 @@ function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
       <img
         src={gif}
-        alt={`Animated ArcSultans NFT preview ${slot + 1}`}
+        alt={`Animated ARCSultans NFT preview ${slot + 1}`}
         className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]"
       />
     </div>

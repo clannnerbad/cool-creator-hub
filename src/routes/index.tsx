@@ -88,7 +88,7 @@ function Index() {
 
         <div className="w-full max-w-xl border-8 border-secondary bg-card pixel-shadow">
           <header className="border-b-8 border-secondary bg-muted px-4 py-5 text-center sm:px-6">
-            <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSULTANS</h1>
+            <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSultans</h1>
             <div className="mt-4 flex items-center justify-center gap-4 font-display text-[9px] text-muted-foreground sm:gap-8 sm:text-[10px]">
               <span>CREDITS: 01</span>
               <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>

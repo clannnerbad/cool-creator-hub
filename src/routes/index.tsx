@@ -100,7 +100,7 @@ function Index() {
             <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
               <img
                 src={CENTER_PREVIEW}
-                alt="Animated ArcSultans NFT collection preview"
+                alt="Animated ARCSultans NFT collection preview"
                 className="aspect-square w-full object-cover [image-rendering:pixelated]"
               />
               <span className="absolute left-3 top-3 z-20 bg-background px-2 py-1 font-display text-[8px] text-accent">LIVE PREVIEW</span>

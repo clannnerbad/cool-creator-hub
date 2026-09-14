@@ -9,25 +9,25 @@ import { Label } from "@/components/ui/label";
 import { submitWhitelistSignup } from "@/lib/whitelist.functions";
 
 const WALLET_RE = /^0x[a-fA-F0-9]{40}$/;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const X_LINK_RE = /^https:\/\/(x\.com|twitter\.com)\/\S+$/;
 
-type Errors = Partial<Record<"walletAddress" | "email" | "xUsername" | "form", string>>;
+type Errors = Partial<Record<"walletAddress" | "xUsername" | "xCommentLink" | "form", string>>;
 
 export function WhitelistForm({ onDone }: { onDone?: () => void }) {
   const submit = useServerFn(submitWhitelistSignup);
 
   const [walletAddress, setWalletAddress] = useState("");
-  const [email, setEmail] = useState("");
   const [xUsername, setXUsername] = useState("");
+  const [xCommentLink, setXCommentLink] = useState("");
   const [followed, setFollowed] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
   const walletValid = WALLET_RE.test(walletAddress.trim());
-  const emailValid = EMAIL_RE.test(email.trim());
   const usernameValid = xUsername.trim().length > 0;
-  const canSubmit = walletValid && emailValid && usernameValid && followed && !submitting;
+  const linkValid = X_LINK_RE.test(xCommentLink.trim());
+  const canSubmit = walletValid && usernameValid && linkValid && followed && !submitting;
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -38,8 +38,8 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
       const result = await submit({
         data: {
           walletAddress: walletAddress.trim(),
-          email: email.trim(),
           xUsername: xUsername.trim(),
+          xCommentLink: xCommentLink.trim(),
         },
       });
       if (result.ok) {
@@ -62,7 +62,7 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
           <Check className="h-8 w-8 text-primary" strokeWidth={3} />
         </div>
         <h3 className="font-display text-lg font-bold text-accent">YOU'RE WHITELISTED!</h3>
-        <p className="font-display text-[10px] text-muted-foreground">CHECK YOUR EMAIL FOR CONFIRMATION.</p>
+        <p className="font-display text-[10px] text-muted-foreground">SEE YOU AT MINT — 16.09.2026.</p>
       </div>
     );
   }
@@ -90,23 +90,6 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email" className="font-display text-[10px] text-foreground">EMAIL ADDRESS</Label>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@example.com"
-          maxLength={255}
-          className="h-11 border-2 bg-background font-mono text-sm focus-visible:ring-2"
-        />
-        {email.length > 0 && !emailValid && (
-          <p className="text-xs text-destructive">Enter a valid email address.</p>
-        )}
-        {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
-      </div>
-
-      <div className="space-y-2">
         <Label htmlFor="x-username" className="font-display text-[10px] text-foreground">X USERNAME</Label>
         <Input
           id="x-username"
@@ -117,6 +100,26 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
           className="h-11 border-2 bg-background font-mono text-sm focus-visible:ring-2"
         />
         {errors.xUsername && <p className="text-xs text-destructive">{errors.xUsername}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="x-comment-link" className="font-display text-[10px] text-foreground">X COMMENT LINK</Label>
+        <Input
+          id="x-comment-link"
+          value={xCommentLink}
+          onChange={(e) => setXCommentLink(e.target.value)}
+          placeholder="https://x.com/.../status/..."
+          autoComplete="off"
+          spellCheck={false}
+          maxLength={500}
+          className="h-11 border-2 bg-background font-mono text-sm focus-visible:ring-2"
+        />
+        {xCommentLink.length > 0 && !linkValid && (
+          <p className="text-xs text-destructive">
+            Must start with https://x.com/ or https://twitter.com/
+          </p>
+        )}
+        {errors.xCommentLink && <p className="text-xs text-destructive">{errors.xCommentLink}</p>}
       </div>
 
       <div className="border-2 border-secondary bg-muted p-4">

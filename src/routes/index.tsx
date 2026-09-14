@@ -42,17 +42,17 @@ function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ArcSultans — NFT Whitelist Signup" },
+      { title: "ARCSultans — NFT Whitelist Signup" },
       {
         name: "description",
         content:
-          "Secure your spot on the ArcSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
+          "Secure your spot on the ARCSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
       },
-      { property: "og:title", content: "ArcSultans — NFT Whitelist Signup" },
+      { property: "og:title", content: "ARCSultans — NFT Whitelist Signup" },
       {
         property: "og:description",
         content:
-          "Secure your spot on the ArcSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
+          "Secure your spot on the ARCSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

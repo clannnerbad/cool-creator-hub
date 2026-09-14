@@ -29,7 +29,7 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
   const linkMatch = linkMatchResult !== null;
   const linkUsername = linkMatchResult ? linkMatchResult[1] : null;
   const usernameMatch =
-    linkUsername !== null && linkUsername.toLowerCase() === usernameClean.toLowerCase();
+    linkUsername != null && linkUsername.toLowerCase() === usernameClean.toLowerCase();
   const linkValid = linkMatch && usernameMatch;
 
   // Inline error for the comment link field (shown while typing)

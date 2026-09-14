@@ -112,19 +112,19 @@ function Index() {
     <main className="relative h-screen overflow-hidden bg-background selection:bg-accent selection:text-accent-foreground">
       <BackgroundSlideshow />
 
-      {/* 4 corner GIF preview boxes — locked to viewport corners (whitelist state only, lg+) */}
+      {/* 4 corner GIF preview boxes — anchored to viewport corners (whitelist state only, lg+) */}
       {showWhitelist && (
         <>
-          <div className="fixed left-[calc(50%-21.5rem)] top-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed left-20 top-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[0].backdrop} gif={SIDE_FRAMES[0].gif} slot={0} />
           </div>
-          <div className="fixed bottom-28 left-[calc(50%-21.5rem)] z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed bottom-32 left-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[1].backdrop} gif={SIDE_FRAMES[1].gif} slot={1} />
           </div>
-          <div className="fixed left-[calc(50%+15.5rem)] top-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed right-20 top-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[2].backdrop} gif={SIDE_FRAMES[2].gif} slot={2} />
           </div>
-          <div className="fixed left-[calc(50%+15.5rem)] bottom-28 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed bottom-32 right-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[3].backdrop} gif={SIDE_FRAMES[3].gif} slot={3} />
           </div>
         </>

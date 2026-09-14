@@ -34,6 +34,31 @@ const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-sand", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_solid_slate_gray_100.gif" },
 ] as const;
 
+function BackgroundSlideshow() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setActive((i) => (i + 1) % BG_SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div aria-hidden className="fixed inset-0 z-0 overflow-hidden">
+      {BG_SLIDES.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85" />
+    </div>
+  );
+}
+
 function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>

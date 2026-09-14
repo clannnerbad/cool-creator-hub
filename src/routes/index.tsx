@@ -17,20 +17,14 @@ import nft3 from "@/assets/nft-3.jpg";
 import nft4 from "@/assets/nft-4.jpg";
 import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
-import arcBackgroundAsset from "@/assets/arcsultans-arc-backgound-100.gif.asset.json";
-import magmaBurstAsset from "@/assets/arcsultans-magma-burst-100.gif.asset.json";
-import mixedAsset from "@/assets/arcsultans-mixed-100.gif.asset.json";
-import solidSkyBlueAsset from "@/assets/arcsultans-solid-sky-blue-100.gif.asset.json";
-import solidSlateGrayAsset from "@/assets/arcsultans-solid-slate-gray-100.gif.asset.json";
-
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 
-const CENTER_PREVIEW = mixedAsset.url;
+const CENTER_PREVIEW = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_mixed_100.gif";
 const SIDE_FRAMES = [
-  { backdrop: "nft-backdrop-ivory", gif: arcBackgroundAsset.url },
-  { backdrop: "nft-backdrop-slate", gif: magmaBurstAsset.url },
-  { backdrop: "nft-backdrop-sky", gif: solidSkyBlueAsset.url },
-  { backdrop: "nft-backdrop-sand", gif: solidSlateGrayAsset.url },
+  { backdrop: "nft-backdrop-ivory", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_arc_backgound_100.gif" },
+  { backdrop: "nft-backdrop-slate", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_magma_burst_100.gif" },
+  { backdrop: "nft-backdrop-sky", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_solid_sky_blue_100.gif" },
+  { backdrop: "nft-backdrop-sand", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_solid_slate_gray_100.gif" },
 ] as const;
 
 function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {

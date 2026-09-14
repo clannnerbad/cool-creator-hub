@@ -125,6 +125,33 @@
   50%, 95% { opacity: 0.3; }
 }
 
+@keyframes cursor-spark {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.7); }
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
+}
+
+.cursor-overlay {
+  display: none;
+}
+
+@media (pointer: fine) {
+  html,
+  body,
+  body * {
+    cursor: none !important;
+  }
+
+  .cursor-overlay {
+    display: block;
+  }
+}
+
+.cursor-spark {
+  animation: cursor-spark 380ms ease-out forwards;
+  transform-origin: center;
+}
+
 @utility crt-screen {
   position: relative;
   &::after {

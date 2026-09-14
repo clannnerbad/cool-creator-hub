@@ -51,7 +51,7 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
     setSubmitting(true);
     setErrors({});
     try {
-      const res = await fetch("https://whitelist.test-hub.xyz/submit", {
+      const res = await fetch("https://whitelist.arcsultans.vip/submit", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },

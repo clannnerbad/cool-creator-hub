@@ -19,6 +19,13 @@ import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 
+const BG_SLIDES = [
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-1.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-2.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-3.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-4.png",
+] as const;
+
 const CENTER_PREVIEW = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_mixed_100.gif";
 const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-ivory", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_arc_backgound_100.gif" },
@@ -26,6 +33,31 @@ const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-sky", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_solid_sky_blue_100.gif" },
   { backdrop: "nft-backdrop-sand", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_solid_slate_gray_100.gif" },
 ] as const;
+
+function BackgroundSlideshow() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setActive((i) => (i + 1) % BG_SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div aria-hidden className="fixed inset-0 z-0 overflow-hidden">
+      {BG_SLIDES.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85" />
+    </div>
+  );
+}
 
 function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   return (
@@ -72,7 +104,8 @@ function Index() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8">
-      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:32px_32px]" />
+      <BackgroundSlideshow />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-20 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">

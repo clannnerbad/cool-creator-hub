@@ -131,6 +131,10 @@
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
 }
 
+.cursor-overlay {
+  display: none;
+}
+
 @media (pointer: fine) {
   html,
   body,
@@ -141,10 +145,6 @@
   .cursor-overlay {
     display: block;
   }
-}
-
-.cursor-overlay {
-  display: none;
 }
 
 .cursor-spark {

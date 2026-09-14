@@ -61,7 +61,7 @@ function BackgroundSlideshow() {
 
 function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   return (
-    <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
+    <div className={`crt-screen border-4 border-secondary p-1.5 pixel-shadow ${backdrop}`}>
       <img
         src={gif}
         alt={`Animated ARCSultans NFT preview ${slot + 1}`}
@@ -109,99 +109,109 @@ function Index() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 pb-28 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8 md:pb-32">
+    <main className="relative h-screen overflow-hidden bg-background selection:bg-accent selection:text-accent-foreground">
       <BackgroundSlideshow />
 
-      {!showWhitelist ? (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col items-center justify-center text-center">
-          <h1 className="font-display text-4xl font-extrabold text-accent sm:text-6xl">ARCSultans</h1>
-          <p className="mt-6 max-w-2xl font-display text-sm leading-7 text-foreground sm:text-lg">
-            999 Sultans arriving on ARC. Claim your throne before the gates close.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => setShowWhitelist(true)}
-            className="mt-8 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
-          >
-            Enter Whitelist
-          </Button>
-        </section>
-      ) : (
-        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-6xl items-center justify-center">
-          <div className="fixed left-4 top-24 bottom-28 hidden w-40 flex-col justify-around lg:flex">
-            {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
-              <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
-            ))}
+      {/* 4 corner GIF preview boxes — locked to viewport corners (whitelist state only, lg+) */}
+      {showWhitelist && (
+        <>
+          <div className="fixed left-4 top-20 z-10 hidden h-24 w-24 lg:block">
+            <SideGifPreview backdrop={SIDE_FRAMES[0].backdrop} gif={SIDE_FRAMES[0].gif} slot={0} />
           </div>
-          <div className="fixed right-4 top-24 bottom-28 hidden w-40 flex-col justify-around lg:flex">
-            {SIDE_FRAMES.slice(2).map((frame, index) => (
-              <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
-            ))}
+          <div className="fixed bottom-28 left-4 z-10 hidden h-24 w-24 lg:block">
+            <SideGifPreview backdrop={SIDE_FRAMES[1].backdrop} gif={SIDE_FRAMES[1].gif} slot={1} />
           </div>
-
-          <div className="w-full max-w-xl border-8 border-secondary bg-card pixel-shadow">
-            <header className="border-b-8 border-secondary bg-muted px-4 py-5 text-center sm:px-6">
-              <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSultans</h1>
-              <div className="mt-4 flex items-center justify-center gap-4 font-display text-[9px] text-muted-foreground sm:gap-8 sm:text-[10px]">
-                <span>CREDITS: 01</span>
-                <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>
-                <span>ARC MODE</span>
-              </div>
-            </header>
-
-            <div className="flex flex-col items-center px-5 py-6 sm:px-8">
-              <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
-                <img
-                  src={CENTER_PREVIEW}
-                  alt="Animated ARCSultans NFT collection preview"
-                  className="aspect-square w-full object-cover [image-rendering:pixelated]"
-                />
-                <span className="absolute left-3 top-3 z-20 bg-background px-2 py-1 font-display text-[8px] text-accent">LIVE PREVIEW</span>
-              </div>
-
-              <p className="mt-5 text-center font-display text-[10px] leading-5 text-muted-foreground sm:text-xs">
-                A GOLDEN DYNASTY OF 1/1 SOVEREIGNS ON ARC
-              </p>
-
-              <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                  <Button
-                    size="lg"
-                   className="mt-6 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
-                  >
-                   ENTER WHITELIST
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-h-[92vh] overflow-y-auto border-4 border-accent bg-popover p-5 pixel-shadow sm:max-w-md sm:rounded-none sm:p-7">
-                  <DialogHeader>
-                   <DialogTitle className="font-display text-lg text-accent">JOIN WHITELIST</DialogTitle>
-                   <DialogDescription className="font-display text-[10px] leading-5">
-                     COMPLETE ALL FIELDS TO SECURE YOUR SPOT
-                    </DialogDescription>
-                  </DialogHeader>
-                  <WhitelistForm onDone={handleWhitelistDone} />
-                </DialogContent>
-              </Dialog>
-
-              <div className="mt-5 flex gap-2" aria-hidden="true">
-                {SLIDES.map((src, i) => (
-                  <span
-                    key={src}
-                   className={`h-2 transition-all duration-300 ${
-                     i === active ? "w-8 bg-accent" : "w-2 bg-secondary"
-                    }`}
-                  />
-                ))}
-              </div>
-           </div>
-
-            <footer className="flex items-center justify-between border-t-8 border-secondary bg-muted px-5 py-3 font-display text-[8px] text-muted-foreground">
-              <span>MINT: 16.09.2026</span>
-              <span className="text-accent">SYSTEM READY</span>
-            </footer>
+          <div className="fixed right-4 top-20 z-10 hidden h-24 w-24 lg:block">
+            <SideGifPreview backdrop={SIDE_FRAMES[2].backdrop} gif={SIDE_FRAMES[2].gif} slot={2} />
           </div>
-        </section>
+          <div className="fixed bottom-28 right-4 z-10 hidden h-24 w-24 lg:block">
+            <SideGifPreview backdrop={SIDE_FRAMES[3].backdrop} gif={SIDE_FRAMES[3].gif} slot={3} />
+          </div>
+        </>
       )}
+
+      {/* Content — fills viewport, centered, clears the fixed footer */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 pb-28 pt-5">
+        {!showWhitelist ? (
+          <section className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center text-center">
+            <h1 className="font-display text-4xl font-extrabold text-accent sm:text-6xl">ARCSultans</h1>
+            <p className="mt-6 max-w-2xl font-display text-sm leading-7 text-foreground sm:text-lg">
+              999 Sultans arriving on ARC. Claim your throne before the gates close.
+            </p>
+            <Button
+              size="lg"
+              onClick={() => setShowWhitelist(true)}
+              className="mt-8 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
+            >
+              Enter Whitelist
+            </Button>
+          </section>
+        ) : (
+          <section className="mx-auto flex w-full max-w-xl items-center justify-center">
+            <div className="w-full max-w-md border-4 border-secondary bg-card pixel-shadow">
+              <header className="border-b-4 border-secondary bg-muted px-4 py-3 text-center">
+                <h1 className="font-display text-2xl font-extrabold text-accent sm:text-3xl">ARCSultans</h1>
+                <div className="mt-2 flex items-center justify-center gap-3 font-display text-[8px] text-muted-foreground sm:gap-6 sm:text-[9px]">
+                  <span>CREDITS: 01</span>
+                  <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>
+                  <span>ARC MODE</span>
+                </div>
+              </header>
+
+              <div className="flex flex-col items-center px-4 py-4">
+                <div className="crt-screen relative w-full max-w-52 border-4 border-accent bg-background p-2">
+                  <img
+                    src={CENTER_PREVIEW}
+                    alt="Animated ARCSultans NFT collection preview"
+                    className="aspect-square w-full object-cover [image-rendering:pixelated]"
+                  />
+                  <span className="absolute left-2 top-2 z-20 bg-background px-1.5 py-0.5 font-display text-[7px] text-accent">LIVE PREVIEW</span>
+                </div>
+
+                <p className="mt-3 text-center font-display text-[9px] leading-4 text-muted-foreground sm:text-[10px]">
+                  A GOLDEN DYNASTY OF 1/1 SOVEREIGNS ON ARC
+                </p>
+
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      size="lg"
+                      className="mt-4 h-12 w-full max-w-52 border-0 border-b-8 border-secondary bg-primary px-4 font-display text-xs font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-sm"
+                    >
+                      ENTER WHITELIST
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-h-[92vh] overflow-y-auto border-4 border-accent bg-popover p-5 pixel-shadow sm:max-w-md sm:rounded-none sm:p-7">
+                    <DialogHeader>
+                      <DialogTitle className="font-display text-lg text-accent">JOIN WHITELIST</DialogTitle>
+                      <DialogDescription className="font-display text-[10px] leading-5">
+                        COMPLETE ALL FIELDS TO SECURE YOUR SPOT
+                      </DialogDescription>
+                    </DialogHeader>
+                    <WhitelistForm onDone={handleWhitelistDone} />
+                  </DialogContent>
+                </Dialog>
+
+                <div className="mt-3 flex gap-2" aria-hidden="true">
+                  {SLIDES.map((src, i) => (
+                    <span
+                      key={src}
+                      className={`h-2 transition-all duration-300 ${
+                        i === active ? "w-6 bg-accent" : "w-2 bg-secondary"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <footer className="flex items-center justify-between border-t-4 border-secondary bg-muted px-4 py-2 font-display text-[8px] text-muted-foreground">
+                <span>MINT: 16.09.2026</span>
+                <span className="text-accent">SYSTEM READY</span>
+              </footer>
+            </div>
+          </section>
+        )}
+      </div>
 
       <footer className="fixed inset-x-0 bottom-0 z-20 w-full px-6 py-5 sm:px-8">
         <div className="flex w-full items-center justify-between gap-6">

@@ -104,7 +104,8 @@ function Index() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8">
-      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:32px_32px]" />
+      <BackgroundSlideshow />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-20 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">

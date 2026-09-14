@@ -154,6 +154,36 @@ function Index() {
           </footer>
         </div>
       </section>
+
+      <footer className="relative z-10 mx-auto mt-4 flex max-w-6xl items-center justify-center gap-6 pb-4">
+        <a
+          href="https://t.me/YOUR_CHANNEL"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Telegram"
+          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
+        >
+          <img src="/footer/telegram.png" alt="Telegram" className="h-8 w-auto" />
+        </a>
+        <a
+          href="https://x.com/SaudisARC"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X (Twitter)"
+          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
+        >
+          <img src="/footer/x-white.png" alt="X (Twitter)" className="h-8 w-auto" />
+        </a>
+        <a
+          href="https://opensea.io/collection/YOUR_COLLECTION"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="OpenSea"
+          className="opacity-80 transition-all duration-200 hover:opacity-100 hover:scale-110"
+        >
+          <img src="/footer/opensea-white.svg" alt="OpenSea" className="h-8 w-auto" />
+        </a>
+      </footer>
     </main>
   );
 }

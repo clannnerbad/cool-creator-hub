@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +27,8 @@ const BG_SLIDES = [
 ] as const;
 
 const CENTER_PREVIEW = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_mixed_100.gif";
+const CURSOR_IMAGE = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/cigarette-cursor.png";
+const SPARK_IMAGE = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/spark-pixel.svg";
 const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-ivory", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_arc_backgound_100.gif" },
   { backdrop: "nft-backdrop-slate", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_magma_burst_100.gif" },
@@ -71,6 +73,60 @@ function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string
   );
 }
 
+function CustomCursor() {
+  const cursorRef = useRef<HTMLImageElement>(null);
+  const [sparks, setSparks] = useState<Array<{ id: number; x: number; y: number }>>([]);
+
+  useEffect(() => {
+    let nextId = 0;
+
+    const moveCursor = (event: MouseEvent) => {
+      if (!cursorRef.current) return;
+      cursorRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+      cursorRef.current.style.opacity = "1";
+    };
+    const hideCursor = () => {
+      if (cursorRef.current) cursorRef.current.style.opacity = "0";
+    };
+    const showSpark = (event: MouseEvent) => {
+      const id = nextId++;
+      setSparks((current) => [...current, { id, x: event.clientX, y: event.clientY }]);
+      window.setTimeout(() => {
+        setSparks((current) => current.filter((spark) => spark.id !== id));
+      }, 400);
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    document.documentElement.addEventListener("mouseleave", hideCursor);
+    window.addEventListener("click", showSpark);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+      document.documentElement.removeEventListener("mouseleave", hideCursor);
+      window.removeEventListener("click", showSpark);
+    };
+  }, []);
+
+  return (
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
+      <img
+        ref={cursorRef}
+        src={CURSOR_IMAGE}
+        alt=""
+        className="absolute left-0 top-0 h-8 w-8 opacity-0 [image-rendering:pixelated]"
+      />
+      {sparks.map((spark) => (
+        <img
+          key={spark.id}
+          src={SPARK_IMAGE}
+          alt=""
+          className="cursor-spark absolute h-6 w-6"
+          style={{ left: spark.x, top: spark.y }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -111,20 +167,21 @@ function Index() {
   return (
     <main className="relative h-screen overflow-hidden bg-background selection:bg-accent selection:text-accent-foreground">
       <BackgroundSlideshow />
+      <CustomCursor />
 
       {/* 4 corner GIF preview boxes — anchored to viewport corners (whitelist state only, lg+) */}
       {showWhitelist && (
         <>
-          <div className="fixed left-20 top-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed left-40 top-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[0].backdrop} gif={SIDE_FRAMES[0].gif} slot={0} />
           </div>
-          <div className="fixed bottom-32 left-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed bottom-32 left-40 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[1].backdrop} gif={SIDE_FRAMES[1].gif} slot={1} />
           </div>
-          <div className="fixed right-20 top-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed right-40 top-20 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[2].backdrop} gif={SIDE_FRAMES[2].gif} slot={2} />
           </div>
-          <div className="fixed bottom-32 right-20 z-10 hidden h-24 w-24 lg:block">
+          <div className="fixed bottom-32 right-40 z-10 hidden h-24 w-24 lg:block">
             <SideGifPreview backdrop={SIDE_FRAMES[3].backdrop} gif={SIDE_FRAMES[3].gif} slot={3} />
           </div>
         </>

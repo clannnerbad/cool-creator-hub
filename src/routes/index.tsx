@@ -19,6 +19,13 @@ import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
 
+const BG_SLIDES = [
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-1.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-2.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-3.png",
+  "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/backgroundstory/arcsultans-bg-4.png",
+] as const;
+
 const CENTER_PREVIEW = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_mixed_100.gif";
 const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-ivory", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_arc_backgound_100.gif" },

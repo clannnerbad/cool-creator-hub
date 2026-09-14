@@ -109,7 +109,7 @@ function Index() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 pb-24 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8 md:pb-28">
+    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-5 pb-28 selection:bg-accent selection:text-accent-foreground md:px-8 md:py-8 md:pb-32">
       <BackgroundSlideshow />
 
       {!showWhitelist ? (

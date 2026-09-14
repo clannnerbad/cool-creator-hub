@@ -33,28 +33,11 @@ const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-sand", gif: solidSlateGrayAsset.url },
 ] as const;
 
-function RandomGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
-  const [restart, setRestart] = useState(0);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const randomize = () => {
-      setRestart((value) => value + 1);
-      timeout = setTimeout(randomize, 2800 + Math.random() * 4200);
-    };
-
-    timeout = setTimeout(randomize, 250 + slot * 430 + Math.random() * 700);
-    return () => clearTimeout(timeout);
-  }, [slot]);
-
-  const previewUrl = `${gif}?side=${slot}&take=${restart}`;
-
+function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
       <img
-        key={restart}
-        src={previewUrl}
+        src={gif}
         alt={`Animated ArcSultans NFT preview ${slot + 1}`}
         className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]"
       />

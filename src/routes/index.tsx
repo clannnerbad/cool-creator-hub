@@ -33,28 +33,11 @@ const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-sand", gif: solidSlateGrayAsset.url },
 ] as const;
 
-function RandomGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
-  const [restart, setRestart] = useState(0);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const randomize = () => {
-      setRestart((value) => value + 1);
-      timeout = setTimeout(randomize, 2800 + Math.random() * 4200);
-    };
-
-    timeout = setTimeout(randomize, 250 + slot * 430 + Math.random() * 700);
-    return () => clearTimeout(timeout);
-  }, [slot]);
-
-  const previewUrl = `${gif}?side=${slot}&take=${restart}`;
-
+function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
       <img
-        key={restart}
-        src={previewUrl}
+        src={gif}
         alt={`Animated ArcSultans NFT preview ${slot + 1}`}
         className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]"
       />
@@ -100,12 +83,12 @@ function Index() {
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
           {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
-            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
+            <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
           ))}
         </div>
         <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
           {SIDE_FRAMES.slice(2).map((frame, index) => (
-            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
+            <SideGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
           ))}
         </div>
 

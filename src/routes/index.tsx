@@ -17,17 +17,23 @@ import nft3 from "@/assets/nft-3.jpg";
 import nft4 from "@/assets/nft-4.jpg";
 import nft5 from "@/assets/nft-5.jpg";
 import nft6 from "@/assets/nft-6.jpg";
-const ARC_GODS_PREVIEW = "/arcgods-preview.gif";
+import arcBackgroundAsset from "@/assets/arcsultans-arc-backgound-100.gif.asset.json";
+import magmaBurstAsset from "@/assets/arcsultans-magma-burst-100.gif.asset.json";
+import mixedAsset from "@/assets/arcsultans-mixed-100.gif.asset.json";
+import solidSkyBlueAsset from "@/assets/arcsultans-solid-sky-blue-100.gif.asset.json";
+import solidSlateGrayAsset from "@/assets/arcsultans-solid-slate-gray-100.gif.asset.json";
 
 const SLIDES = [nft1, nft2, nft3, nft4, nft5, nft6];
-const SIDE_PREVIEWS = [
-  "nft-backdrop-ivory",
-  "nft-backdrop-slate",
-  "nft-backdrop-sky",
-  "nft-backdrop-sand",
+
+const CENTER_PREVIEW = mixedAsset.url;
+const SIDE_FRAMES = [
+  { backdrop: "nft-backdrop-ivory", gif: arcBackgroundAsset.url },
+  { backdrop: "nft-backdrop-slate", gif: magmaBurstAsset.url },
+  { backdrop: "nft-backdrop-sky", gif: solidSkyBlueAsset.url },
+  { backdrop: "nft-backdrop-sand", gif: solidSlateGrayAsset.url },
 ] as const;
 
-function RandomGifPreview({ backdrop, slot }: { backdrop: string; slot: number }) {
+function RandomGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string; slot: number }) {
   const [restart, setRestart] = useState(0);
 
   useEffect(() => {
@@ -42,7 +48,7 @@ function RandomGifPreview({ backdrop, slot }: { backdrop: string; slot: number }
     return () => clearTimeout(timeout);
   }, [slot]);
 
-  const previewUrl = `${ARC_GODS_PREVIEW}?side=${slot}&take=${restart}`;
+  const previewUrl = `${gif}?side=${slot}&take=${restart}`;
 
   return (
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
@@ -93,13 +99,13 @@ function Index() {
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-6xl items-center justify-center md:min-h-[calc(100vh-4rem)]">
         <div className="absolute inset-y-10 left-0 hidden w-40 flex-col justify-around lg:flex">
-          {SIDE_PREVIEWS.slice(0, 2).map((backdrop, slot) => (
-            <RandomGifPreview key={backdrop} backdrop={backdrop} slot={slot} />
+          {SIDE_FRAMES.slice(0, 2).map((frame, slot) => (
+            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={slot} />
           ))}
         </div>
         <div className="absolute inset-y-10 right-0 hidden w-40 flex-col justify-around lg:flex">
-          {SIDE_PREVIEWS.slice(2).map((backdrop, index) => (
-            <RandomGifPreview key={backdrop} backdrop={backdrop} slot={index + 2} />
+          {SIDE_FRAMES.slice(2).map((frame, index) => (
+            <RandomGifPreview key={frame.backdrop} backdrop={frame.backdrop} gif={frame.gif} slot={index + 2} />
           ))}
         </div>
 
@@ -116,7 +122,7 @@ function Index() {
           <div className="flex flex-col items-center px-5 py-6 sm:px-8">
             <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
               <img
-                src={ARC_GODS_PREVIEW}
+                src={CENTER_PREVIEW}
                 alt="Animated ArcSultans NFT collection preview"
                 className="aspect-square w-full object-cover [image-rendering:pixelated]"
               />
@@ -131,17 +137,17 @@ function Index() {
           <DialogTrigger asChild>
             <Button
               size="lg"
-                  className="mt-6 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
+                   className="mt-6 h-16 w-full max-w-sm border-0 border-b-8 border-secondary bg-primary px-4 font-display text-sm font-bold text-primary-foreground shadow-none hover:bg-primary/90 active:translate-y-2 active:border-b-0 sm:text-lg"
             >
-                  ENTER WHITELIST
+                   ENTER WHITELIST
             </Button>
           </DialogTrigger>
               <DialogContent className="max-h-[92vh] overflow-y-auto border-4 border-accent bg-popover p-5 pixel-shadow sm:max-w-md sm:rounded-none sm:p-7">
             <DialogHeader>
-                  <DialogTitle className="font-display text-lg text-accent">JOIN WHITELIST</DialogTitle>
-                  <DialogDescription className="font-display text-[10px] leading-5">
-                    COMPLETE ALL FIELDS TO SECURE YOUR SPOT
-              </DialogDescription>
+                   <DialogTitle className="font-display text-lg text-accent">JOIN WHITELIST</DialogTitle>
+                   <DialogDescription className="font-display text-[10px] leading-5">
+                     COMPLETE ALL FIELDS TO SECURE YOUR SPOT
+               </DialogDescription>
             </DialogHeader>
             <WhitelistForm />
           </DialogContent>
@@ -150,14 +156,14 @@ function Index() {
             <div className="mt-5 flex gap-2" aria-hidden="true">
           {SLIDES.map((src, i) => (
             <span
-              key={src}
-                  className={`h-2 transition-all duration-300 ${
-                    i === active ? "w-8 bg-accent" : "w-2 bg-secondary"
-              }`}
-            />
-          ))}
-        </div>
-          </div>
+               key={src}
+                   className={`h-2 transition-all duration-300 ${
+                     i === active ? "w-8 bg-accent" : "w-2 bg-secondary"
+               }`}
+             />
+           ))}
+         </div>
+           </div>
 
           <footer className="flex items-center justify-between border-t-8 border-secondary bg-muted px-5 py-3 font-display text-[8px] text-muted-foreground">
             <span>MINT: 16.09.2026</span>

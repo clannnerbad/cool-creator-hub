@@ -1,21 +1,18 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { Check, ExternalLink, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitWhitelistSignup } from "@/lib/whitelist.functions";
 
 const WALLET_RE = /^0x[a-fA-F0-9]{40}$/;
-const X_LINK_RE = /^https:\/\/(x\.com|twitter\.com)\/\S+$/;
+// Direct comment link: https://x.com/USERNAME/status/123 or https://twitter.com/USERNAME/status/123
+const X_COMMENT_RE = /^https:\/\/(?:x\.com|twitter\.com)\/([A-Za-z0-9_]+)\/status\/\d+$/;
 
 type Errors = Partial<Record<"walletAddress" | "xUsername" | "xCommentLink" | "form", string>>;
 
 export function WhitelistForm({ onDone }: { onDone?: () => void }) {
-  const submit = useServerFn(submitWhitelistSignup);
-
   const [walletAddress, setWalletAddress] = useState("");
   const [xUsername, setXUsername] = useState("");
   const [xCommentLink, setXCommentLink] = useState("");
@@ -25,8 +22,27 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
   const [done, setDone] = useState(false);
 
   const walletValid = WALLET_RE.test(walletAddress.trim());
-  const usernameValid = xUsername.trim().length > 0;
-  const linkValid = X_LINK_RE.test(xCommentLink.trim());
+  const usernameClean = xUsername.trim().replace(/^@/, "");
+  const usernameValid = usernameClean.length > 0;
+
+  const linkMatchResult = xCommentLink.trim().match(X_COMMENT_RE);
+  const linkMatch = linkMatchResult !== null;
+  const linkUsername = linkMatchResult ? linkMatchResult[1] : null;
+  const usernameMatch =
+    linkUsername !== null && linkUsername.toLowerCase() === usernameClean.toLowerCase();
+  const linkValid = linkMatch && usernameMatch;
+
+  // Inline error for the comment link field (shown while typing)
+  let linkError: string | null = null;
+  if (xCommentLink.trim().length > 0) {
+    if (!linkMatch) {
+      linkError =
+        "Please paste the direct link to your comment (use the Share → Copy Link button on your comment, not a shortened link).";
+    } else if (!usernameMatch) {
+      linkError = "X username doesn't match the username in your comment link.";
+    }
+  }
+
   const canSubmit = walletValid && usernameValid && linkValid && followed && !submitting;
 
   async function handleSubmit(event: React.FormEvent) {
@@ -35,18 +51,30 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
     setSubmitting(true);
     setErrors({});
     try {
-      const result = await submit({
-        data: {
-          walletAddress: walletAddress.trim(),
-          xUsername: xUsername.trim(),
-          xCommentLink: xCommentLink.trim(),
-        },
+      const res = await fetch("https://whitelist.test-hub.xyz/submit", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          wallet_address: walletAddress.trim(),
+          x_username: usernameClean,
+          x_comment_link: xCommentLink.trim(),
+        }),
       });
-      if (result.ok) {
+      if (res.ok) {
         setDone(true);
         onDone?.();
       } else {
-        setErrors({ [result.field]: result.message });
+        let message = "Something went wrong. Please try again.";
+        try {
+          const body = await res.json();
+          if (body && typeof body.error === "string" && body.error.length > 0) {
+            message = body.error;
+          }
+        } catch {
+          // response wasn't JSON — keep the generic message
+        }
+        setErrors({ form: message });
       }
     } catch {
       setErrors({ form: "Something went wrong. Please try again." });
@@ -114,11 +142,7 @@ export function WhitelistForm({ onDone }: { onDone?: () => void }) {
           maxLength={500}
           className="h-11 border-2 bg-background font-mono text-sm focus-visible:ring-2"
         />
-        {xCommentLink.length > 0 && !linkValid && (
-          <p className="text-xs text-destructive">
-            Must start with https://x.com/ or https://twitter.com/
-          </p>
-        )}
+        {linkError && <p className="text-xs text-destructive">{linkError}</p>}
         {errors.xCommentLink && <p className="text-xs text-destructive">{errors.xCommentLink}</p>}
       </div>
 

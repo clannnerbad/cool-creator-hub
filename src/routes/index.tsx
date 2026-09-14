@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { WhitelistForm } from "@/components/WhitelistForm";
+import cursorAsset from "@/assets/mixed-cigarette-cursor.gif.asset.json";
 import nft1 from "@/assets/nft-1.jpg";
 import nft2 from "@/assets/nft-2.jpg";
 import nft3 from "@/assets/nft-3.jpg";
@@ -27,7 +28,7 @@ const BG_SLIDES = [
 ] as const;
 
 const CENTER_PREVIEW = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_mixed_100.gif";
-const CURSOR_IMAGE = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/cigarette-cursor.png";
+const CURSOR_IMAGE = cursorAsset.url;
 const SPARK_IMAGE = "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/footer/spark-pixel.svg";
 const SIDE_FRAMES = [
   { backdrop: "nft-backdrop-ivory", gif: "https://cdn.jsdelivr.net/gh/0xDarkSeidBull/TheSaudisARC@main/layers/arcsultans_arc_backgound_100.gif" },
@@ -209,9 +210,9 @@ function Index() {
               <header className="border-b-4 border-secondary bg-muted px-4 py-3 text-center">
                 <h1 className="font-display text-2xl font-extrabold text-accent sm:text-3xl">ARCSultans</h1>
                 <div className="mt-2 flex items-center justify-center gap-3 font-display text-[8px] text-muted-foreground sm:gap-6 sm:text-[9px]">
-                  <span>CREDITS: 01</span>
+                   <span>SUPPLY: 999</span>
                   <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>
-                  <span>ARC MODE</span>
+                   <span>1 ARC SULTAN</span>
                 </div>
               </header>
 
@@ -226,7 +227,7 @@ function Index() {
                 </div>
 
                 <p className="mt-3 text-center font-display text-[9px] leading-4 text-muted-foreground sm:text-[10px]">
-                  A GOLDEN DYNASTY OF 1/1 SOVEREIGNS ON ARC
+                   999 Sultans. 1 Arc Sultan. A golden dynasty on ARC network.
                 </p>
 
                 <Dialog open={open} onOpenChange={setOpen}>

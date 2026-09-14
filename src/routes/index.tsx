@@ -32,7 +32,7 @@ function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string
     <div className={`crt-screen border-4 border-secondary p-2 pixel-shadow ${backdrop}`}>
       <img
         src={gif}
-        alt={`Animated ArcSultans NFT preview ${slot + 1}`}
+        alt={`Animated ARCSultans NFT preview ${slot + 1}`}
         className="aspect-square w-full object-cover mix-blend-multiply [image-rendering:pixelated]"
       />
     </div>
@@ -42,17 +42,17 @@ function SideGifPreview({ backdrop, gif, slot }: { backdrop: string; gif: string
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ArcSultans — NFT Whitelist Signup" },
+      { title: "ARCSultans — NFT Whitelist Signup" },
       {
         name: "description",
         content:
-          "Secure your spot on the ArcSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
+          "Secure your spot on the ARCSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
       },
-      { property: "og:title", content: "ArcSultans — NFT Whitelist Signup" },
+      { property: "og:title", content: "ARCSultans — NFT Whitelist Signup" },
       {
         property: "og:description",
         content:
-          "Secure your spot on the ArcSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
+          "Secure your spot on the ARCSultans whitelist. Mint 16 September 2026 — join the golden dynasty on ARC.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -88,7 +88,7 @@ function Index() {
 
         <div className="w-full max-w-xl border-8 border-secondary bg-card pixel-shadow">
           <header className="border-b-8 border-secondary bg-muted px-4 py-5 text-center sm:px-6">
-            <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSULTANS</h1>
+            <h1 className="font-display text-3xl font-extrabold text-accent sm:text-5xl">ARCSultans</h1>
             <div className="mt-4 flex items-center justify-center gap-4 font-display text-[9px] text-muted-foreground sm:gap-8 sm:text-[10px]">
               <span>CREDITS: 01</span>
               <span className="text-primary [animation:arcade-blink_1.2s_steps(1)_infinite]">WHITELIST LIVE</span>
@@ -100,7 +100,7 @@ function Index() {
             <div className="crt-screen relative w-full max-w-80 border-4 border-accent bg-background p-2">
               <img
                 src={CENTER_PREVIEW}
-                alt="Animated ArcSultans NFT collection preview"
+                alt="Animated ARCSultans NFT collection preview"
                 className="aspect-square w-full object-cover [image-rendering:pixelated]"
               />
               <span className="absolute left-3 top-3 z-20 bg-background px-2 py-1 font-display text-[8px] text-accent">LIVE PREVIEW</span>
@@ -149,10 +149,10 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
+      <footer className="relative z-10 mt-8 w-full border-t-4 border-secondary bg-black px-6 py-5 sm:px-8">
+        <div className="flex w-full items-center justify-between gap-6">
           <div className="flex flex-col">
-            <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ArcSultans</span>
+            <span className="font-display text-xl font-extrabold text-white sm:text-2xl">ARCSultans</span>
             <span className="font-display text-[10px] text-gray-400 sm:text-xs">Mint 16 September 2026 · Arc network</span>
           </div>
           <div className="flex items-center gap-3">
